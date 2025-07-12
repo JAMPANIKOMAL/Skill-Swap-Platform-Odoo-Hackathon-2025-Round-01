@@ -1,7 +1,5 @@
-from flask_sqlalchemy import SQLAlchemy
+from . import db
 from flask_login import UserMixin
-
-from app import db
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
@@ -19,5 +17,5 @@ class User(db.Model, UserMixin):
 class Skill(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
-    type = db.Column(db.String(10), nullable=False)  # 'offered' or 'wanted'
+    type = db.Column(db.String(10), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)

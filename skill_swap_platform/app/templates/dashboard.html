@@ -1,0 +1,8 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2>Welcome, {{ user.name }}</h2>
+<p>Email: {{ user.email }}</p>
+<p>Location: {{ user.location }}</p>
+<p>Availability: {{ user.availability }}</p>
+<p>Public Profile: {{ "Yes" if user.is_public else "No" }}</p>
+{% endblock %}

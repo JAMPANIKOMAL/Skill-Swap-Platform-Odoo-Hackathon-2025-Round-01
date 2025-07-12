@@ -7,7 +7,11 @@ class RegisterForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])
     location = StringField('Location')
-    availability = SelectField('Availability', choices=[('weekends', 'Weekends'), ('evenings', 'Evenings'), ('anytime', 'Anytime')])
+    availability = SelectField('Availability', choices=[
+        ('weekends', 'Weekends'),
+        ('evenings', 'Evenings'),
+        ('anytime', 'Anytime')
+    ])
     is_public = BooleanField('Make Profile Public')
     submit = SubmitField('Register')
 
