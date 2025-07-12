@@ -1,11 +1,17 @@
 {% extends "layout.html" %}
 {% block content %}
-<h2>Add Skill</h2>
+<h2 class="mb-4">Add Skill</h2>
 <form method="POST">
     {{ form.hidden_tag() }}
-    {{ form.name.label }} {{ form.name() }}<br>
-    {{ form.type.label }} {{ form.type() }}<br>
-    {{ form.submit() }}
+    <div class="mb-3">
+        {{ form.name.label(class="form-label") }}
+        {{ form.name(class="form-control") }}
+    </div>
+    <div class="mb-3">
+        {{ form.type.label(class="form-label") }}
+        {{ form.type(class="form-select") }}
+    </div>
+    {{ form.submit(class="btn btn-success") }}
 </form>
-<a href="{{ url_for('main.dashboard') }}">← Back to Dashboard</a>
+<a class="btn btn-link mt-3" href="{{ url_for('main.dashboard') }}">← Back to Dashboard</a>
 {% endblock %}

@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2 class="mb-4">Browse Public Profiles</h2>
+
+<form method="GET" action="{{ url_for('main.public_profiles') }}" class="mb-4 row g-2">
+    <div class="col-md-4">
+        <input type="text" class="form-control" name="skill" placeholder="Search by skill..." value="{{ request.args.get('skill', '') }}">
+    </div>
+    <div class="col-md-4">
+        <select name="availability" class="form-select">
+            <option value="">Filter by availability</option>
+            <option value="weekends" {% if request.args.get('availability') == 'weekends' %}selected{% endif %}>Weekends</option>
+            <option value="evenings" {% if request.args.get('availability') == 'evenings' %}selected{% endif %}>Evenings</option>
+            <option value="anytime" {% if request.args.get('availability') == 'anytime' %}selected{% endif %}>Anytime</option>
+        </select>
+    </div>
+    <div class="col-md-2">
+        <button type="submit" class="btn btn-primary w-100">Search</button>
+    </div>
+</form>
+
+<div class="row">
+    {% for user in users %}
+    <div class="col-md-6 col-lg-4 mb-4">
+        <div class="card shadow-sm h-100">
+            <div class="card-body">
+                <h5 class="card-title">{{ user.name }}</h5>
+                <p class="card-text">
+                    <strong>Location:</strong> {{ user.location }}<br>
+                    <strong>Availability:</strong> {{ user.availability }}
+                </p>
+                <p><strong>Skills Offered:</strong></p>
+                <ul>
+                    {% for skill in user.skills_offered %}
+                        <li>{{ skill.name }}</li>
+                    {% endfor %}
+                </ul>
+                <p><strong>Skills Wanted:</strong></p>
+                <ul>
+                    {% for skill in user.skills_wanted %}
+                        <li>{{ skill.name }}</li>
+                    {% endfor %}
+                </ul>
+                {% if current_user.is_authenticated and current_user.id != user.id %}
+                    <a href="{{ url_for('main.view_profile', user_id=user.id) }}" class="btn btn-outline-primary">Request Swap</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

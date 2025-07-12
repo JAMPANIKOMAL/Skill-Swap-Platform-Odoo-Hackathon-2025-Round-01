@@ -85,3 +85,23 @@ def delete_skill(skill_id):
     db.session.commit()
     flash('Skill deleted.', 'info')
     return redirect(url_for('main.dashboard'))
+
+@main.route('/public_profiles')
+def public_profiles():
+    from sqlalchemy import or_
+
+    skill_filter = request.args.get('skill', '').lower()
+    availability_filter = request.args.get('availability', '')
+
+    users = User.query.filter_by(is_public=True)
+
+    if availability_filter:
+        users = users.filter(User.availability == availability_filter)
+
+    users = users.all()
+
+    if skill_filter:
+        users = [u for u in users if any(skill_filter in s.name.lower() for s in u.skills_offered + u.skills_wanted)]
+
+    return render_template('public_profiles.html', users=users)
+

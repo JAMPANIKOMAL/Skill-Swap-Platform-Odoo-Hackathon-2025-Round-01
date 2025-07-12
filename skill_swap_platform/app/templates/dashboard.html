@@ -1,28 +1,36 @@
 {% extends "layout.html" %}
 {% block content %}
 <h2>Welcome, {{ user.name }}</h2>
-<p>Email: {{ user.email }}</p>
-<p>Location: {{ user.location }}</p>
-<p>Availability: {{ user.availability }}</p>
-<p>Public Profile: {{ "Yes" if user.is_public else "No" }}</p>
+<ul class="list-group mb-4">
+    <li class="list-group-item"><strong>Email:</strong> {{ user.email }}</li>
+    <li class="list-group-item"><strong>Location:</strong> {{ user.location }}</li>
+    <li class="list-group-item"><strong>Availability:</strong> {{ user.availability }}</li>
+    <li class="list-group-item"><strong>Public Profile:</strong> {{ "Yes" if user.is_public else "No" }}</li>
+</ul>
 
-<h3>Skills Offered:</h3>
-<ul>
+<h4>Skills Offered</h4>
+<ul class="list-group mb-3">
     {% for skill in user.skills_offered %}
-        <li>{{ skill.name }} <a href="{{ url_for('main.delete_skill', skill_id=skill.id) }}">❌</a></li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            {{ skill.name }}
+            <a class="btn btn-sm btn-danger" href="{{ url_for('main.delete_skill', skill_id=skill.id) }}">Delete</a>
+        </li>
     {% else %}
-        <li>No offered skills</li>
+        <li class="list-group-item">No offered skills</li>
     {% endfor %}
 </ul>
 
-<h3>Skills Wanted:</h3>
-<ul>
+<h4>Skills Wanted</h4>
+<ul class="list-group mb-3">
     {% for skill in user.skills_wanted %}
-        <li>{{ skill.name }} <a href="{{ url_for('main.delete_skill', skill_id=skill.id) }}">❌</a></li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            {{ skill.name }}
+            <a class="btn btn-sm btn-danger" href="{{ url_for('main.delete_skill', skill_id=skill.id) }}">Delete</a>
+        </li>
     {% else %}
-        <li>No wanted skills</li>
+        <li class="list-group-item">No wanted skills</li>
     {% endfor %}
 </ul>
 
-<a href="{{ url_for('main.add_skill') }}">➕ Add Skill</a>
+<a class="btn btn-primary" href="{{ url_for('main.add_skill') }}">➕ Add Skill</a>
 {% endblock %}
