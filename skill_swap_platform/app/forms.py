@@ -19,3 +19,8 @@ class LoginForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField('Login')
+
+class SkillForm(FlaskForm):
+    name = StringField('Skill Name', validators=[DataRequired()])
+    type = SelectField('Type', choices=[('offered', 'Offered'), ('wanted', 'Wanted')])
+    submit = SubmitField('Add Skill')

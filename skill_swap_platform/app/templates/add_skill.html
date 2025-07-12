@@ -1,0 +1,11 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2>Add Skill</h2>
+<form method="POST">
+    {{ form.hidden_tag() }}
+    {{ form.name.label }} {{ form.name() }}<br>
+    {{ form.type.label }} {{ form.type() }}<br>
+    {{ form.submit() }}
+</form>
+<a href="{{ url_for('main.dashboard') }}">← Back to Dashboard</a>
+{% endblock %}

@@ -2,12 +2,20 @@ from flask import Blueprint, render_template, redirect, url_for, flash
 from flask_login import login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 
-from .models import User
-from .forms import RegisterForm, LoginForm
+from .models import User, Skill
+from .forms import RegisterForm, LoginForm, SkillForm
 from . import db
 
 main = Blueprint('main', __name__)
 
+# ✅ Root route - redirect based on login status
+@main.route('/')
+def home():
+    if current_user.is_authenticated:
+        return redirect(url_for('main.dashboard'))
+    return redirect(url_for('main.login'))
+
+# ✅ Register route
 @main.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegisterForm()
@@ -26,6 +34,7 @@ def register():
         return redirect(url_for('main.login'))
     return render_template('register.html', form=form)
 
+# ✅ Login route
 @main.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
@@ -37,6 +46,7 @@ def login():
         flash('Invalid email or password.', 'danger')
     return render_template('login.html', form=form)
 
+# ✅ Logout route
 @main.route('/logout')
 @login_required
 def logout():
@@ -44,7 +54,34 @@ def logout():
     flash('Logged out successfully.', 'info')
     return redirect(url_for('main.login'))
 
+# ✅ Dashboard route
 @main.route('/dashboard')
 @login_required
 def dashboard():
     return render_template('dashboard.html', user=current_user)
+
+# ✅ Add skill route
+@main.route('/add_skill', methods=['GET', 'POST'])
+@login_required
+def add_skill():
+    form = SkillForm()
+    if form.validate_on_submit():
+        skill = Skill(name=form.name.data, type=form.type.data, user_id=current_user.id)
+        db.session.add(skill)
+        db.session.commit()
+        flash('Skill added successfully.', 'success')
+        return redirect(url_for('main.dashboard'))
+    return render_template('add_skill.html', form=form)
+
+# ✅ Delete skill route
+@main.route('/delete_skill/<int:skill_id>')
+@login_required
+def delete_skill(skill_id):
+    skill = Skill.query.get_or_404(skill_id)
+    if skill.user_id != current_user.id:
+        flash('Unauthorized action.', 'danger')
+        return redirect(url_for('main.dashboard'))
+    db.session.delete(skill)
+    db.session.commit()
+    flash('Skill deleted.', 'info')
+    return redirect(url_for('main.dashboard'))

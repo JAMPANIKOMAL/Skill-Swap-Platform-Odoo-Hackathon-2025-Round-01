@@ -5,4 +5,24 @@
 <p>Location: {{ user.location }}</p>
 <p>Availability: {{ user.availability }}</p>
 <p>Public Profile: {{ "Yes" if user.is_public else "No" }}</p>
+
+<h3>Skills Offered:</h3>
+<ul>
+    {% for skill in user.skills_offered %}
+        <li>{{ skill.name }} <a href="{{ url_for('main.delete_skill', skill_id=skill.id) }}">❌</a></li>
+    {% else %}
+        <li>No offered skills</li>
+    {% endfor %}
+</ul>
+
+<h3>Skills Wanted:</h3>
+<ul>
+    {% for skill in user.skills_wanted %}
+        <li>{{ skill.name }} <a href="{{ url_for('main.delete_skill', skill_id=skill.id) }}">❌</a></li>
+    {% else %}
+        <li>No wanted skills</li>
+    {% endfor %}
+</ul>
+
+<a href="{{ url_for('main.add_skill') }}">➕ Add Skill</a>
 {% endblock %}
