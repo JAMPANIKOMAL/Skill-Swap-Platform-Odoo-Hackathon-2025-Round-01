@@ -1,22 +1,69 @@
 {% extends "layout.html" %}
 {% block content %}
-<h2 class="mb-4">Rate Skill</h2>
-<form method="POST">
-    {{ form.hidden_tag() }}
-    
-    <div class="mb-3">
-        {{ form.skill.label(class="form-label") }}
-        {{ form.skill(class="form-select") }}
+<style>
+    body {
+        background-color: #f4f6fa;
+    }
+    .rate-skill-card {
+        background-color: #fff;
+        border-radius: 16px;
+        padding: 30px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+        max-width: 500px;
+        margin: auto;
+    }
+    .rate-skill-card h2 {
+        font-weight: 600;
+        color: #2c3e50;
+        text-align: center;
+    }
+    .form-range::-webkit-slider-thumb {
+        background-color: #0d6efd;
+    }
+    .btn-primary {
+        border-radius: 8px;
+        font-weight: 500;
+    }
+    .btn-link {
+        display: block;
+        text-align: center;
+        color: #0d6efd;
+    }
+</style>
+
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="rate-skill-card">
+        <h2 class="mb-4">⭐ Rate a Skill</h2>
+        <form method="POST" novalidate>
+            {{ form.hidden_tag() }}
+
+            <div class="mb-4">
+                {{ form.skill.label(class="form-label") }}
+                {{ form.skill(class="form-select") }}
+                {% for error in form.skill.errors %}
+                    <div class="text-danger small">{{ error }}</div>
+                {% endfor %}
+            </div>
+
+            <div class="mb-4">
+                {{ form.rating.label(class="form-label") }}
+                <div class="d-flex align-items-center">
+                    <span class="me-2">1</span>
+                    {{ form.rating(class="form-range flex-grow-1", min=1, max=5) }}
+                    <span class="ms-2">5</span>
+                </div>
+                <div class="form-text text-center">1 = Poor, 5 = Excellent</div>
+                {% for error in form.rating.errors %}
+                    <div class="text-danger small">{{ error }}</div>
+                {% endfor %}
+            </div>
+
+            <div class="d-grid">
+                {{ form.submit(class="btn btn-primary") }}
+            </div>
+        </form>
+
+        <a class="btn btn-link mt-4" href="{{ url_for('main.dashboard') }}">← Back to Dashboard</a>
     </div>
-
-    <div class="mb-3">
-        {{ form.rating.label(class="form-label") }}
-        {{ form.rating(class="form-range", min=1, max=5) }}
-        <div class="form-text">1 = Poor, 5 = Excellent</div>
-    </div>
-
-    {{ form.submit(class="btn btn-primary") }}
-</form>
-
-<a class="btn btn-link mt-3" href="{{ url_for('main.dashboard') }}">← Back to Dashboard</a>
+</div>
 {% endblock %}
