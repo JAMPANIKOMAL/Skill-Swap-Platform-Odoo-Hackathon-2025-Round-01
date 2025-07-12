@@ -1,48 +1,47 @@
-# 🛠️ Skill Swap Platform
+# Skill Swap Platform
 
-A mini web application that allows users to **offer their skills** and **request skills in return**. The platform supports creating a profile, managing swap requests, and discovering others with the skills you're looking for.
+A mini web application that allows users to offer their skills and request others in return. The platform helps users connect, collaborate, and exchange skills through a structured swap request system.
 
 ---
 
-## 🚀 Features
+## Features
 
-### 👤 User Features
-- **Profile Creation**
+### User Features
+
+- **Profile Management**
   - Name
   - Location (optional)
   - Profile photo (optional)
-  - List of skills offered
-  - List of skills wanted
+  - Skills offered
+  - Skills wanted
   - Availability (e.g., weekends, evenings)
-  - Public or Private profile toggle
+  - Option to make profile public or private
 
 - **Skill Discovery**
-  - Search users by skill (e.g., "Photoshop", "Excel")
-  - Browse other public user profiles
+  - Search for users by skill (e.g., "Photoshop", "Excel")
+  - Browse public profiles
 
-- **Swap Management**
-  - Send skill swap requests to other users
-  - Accept or reject incoming swap offers
+- **Swap Requests**
+  - Send swap requests to other users
+  - Accept or reject incoming requests
   - View current and pending swap requests
   - Delete unaccepted swap requests
-  - Rate or leave feedback after a completed swap
+  - Provide ratings or feedback after a completed swap
 
 ---
 
-## 🛡️ Admin Features
-- Reject or flag **inappropriate or spammy** skill descriptions
+## Admin Features
+
+- Review and reject inappropriate or spammy skill descriptions
 - Ban users who violate platform policies
 - Monitor:
   - Pending swaps
   - Accepted swaps
   - Cancelled swaps
-- Send **platform-wide messages** such as:
-  - Feature updates
-  - Downtime alerts
+- Send platform-wide messages (e.g., feature updates, downtime alerts)
 - Download reports:
-  - User activity logs
-  - Feedback data
+  - User activity
+  - Feedback logs
   - Swap statistics
 
 ---
-
