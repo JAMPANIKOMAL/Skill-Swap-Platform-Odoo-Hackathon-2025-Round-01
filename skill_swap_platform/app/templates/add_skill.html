@@ -1,17 +1,22 @@
 {% extends "layout.html" %}
 {% block content %}
-<h2 class="mb-4">Add Skill</h2>
+<h2 class="mb-4">Rate Skill</h2>
 <form method="POST">
     {{ form.hidden_tag() }}
+    
     <div class="mb-3">
-        {{ form.name.label(class="form-label") }}
-        {{ form.name(class="form-control") }}
+        {{ form.skill.label(class="form-label") }}
+        {{ form.skill(class="form-select") }}
     </div>
+
     <div class="mb-3">
-        {{ form.type.label(class="form-label") }}
-        {{ form.type(class="form-select") }}
+        {{ form.rating.label(class="form-label") }}
+        {{ form.rating(class="form-range", min=1, max=5) }}
+        <div class="form-text">1 = Poor, 5 = Excellent</div>
     </div>
-    {{ form.submit(class="btn btn-success") }}
+
+    {{ form.submit(class="btn btn-primary") }}
 </form>
+
 <a class="btn btn-link mt-3" href="{{ url_for('main.dashboard') }}">← Back to Dashboard</a>
 {% endblock %}
