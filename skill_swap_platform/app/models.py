@@ -19,3 +19,13 @@ class Skill(db.Model):
     name = db.Column(db.String(100), nullable=False)
     type = db.Column(db.String(10), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+
+class SwapRequest(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    from_user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    to_user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    offered_skill = db.Column(db.String(100))
+    requested_skill = db.Column(db.String(100))
+    message = db.Column(db.Text)
+    status = db.Column(db.String(20), default='Pending')  # Pending, Accepted, Rejected

@@ -1,9 +1,6 @@
-from flask import Blueprint, render_template, redirect, url_for, flash
+from flask import Blueprint, render_template, redirect, url_for, flash, request
 from flask_login import login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
-
-from flask import Blueprint, render_template, redirect, url_for, flash, request
-
 
 from .models import User, Skill
 from .forms import RegisterForm, LoginForm, SkillForm
@@ -11,14 +8,14 @@ from . import db
 
 main = Blueprint('main', __name__)
 
-# ✅ Root route - redirect based on login status
+# ✅ Root route
 @main.route('/')
 def home():
     if current_user.is_authenticated:
         return redirect(url_for('main.dashboard'))
     return redirect(url_for('main.login'))
 
-# ✅ Register route
+# ✅ Register
 @main.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegisterForm()
@@ -37,7 +34,7 @@ def register():
         return redirect(url_for('main.login'))
     return render_template('register.html', form=form)
 
-# ✅ Login route
+# ✅ Login
 @main.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
@@ -49,7 +46,7 @@ def login():
         flash('Invalid email or password.', 'danger')
     return render_template('login.html', form=form)
 
-# ✅ Logout route
+# ✅ Logout
 @main.route('/logout')
 @login_required
 def logout():
@@ -57,13 +54,13 @@ def logout():
     flash('Logged out successfully.', 'info')
     return redirect(url_for('main.login'))
 
-# ✅ Dashboard route
+# ✅ Dashboard
 @main.route('/dashboard')
 @login_required
 def dashboard():
     return render_template('dashboard.html', user=current_user)
 
-# ✅ Add skill route
+# ✅ Add skill
 @main.route('/add_skill', methods=['GET', 'POST'])
 @login_required
 def add_skill():
@@ -76,7 +73,7 @@ def add_skill():
         return redirect(url_for('main.dashboard'))
     return render_template('add_skill.html', form=form)
 
-# ✅ Delete skill route
+# ✅ Delete skill
 @main.route('/delete_skill/<int:skill_id>')
 @login_required
 def delete_skill(skill_id):
@@ -89,6 +86,7 @@ def delete_skill(skill_id):
     flash('Skill deleted.', 'info')
     return redirect(url_for('main.dashboard'))
 
+# ✅ Public profiles browsing
 @main.route('/public_profiles')
 def public_profiles():
     from sqlalchemy import or_
@@ -108,3 +106,9 @@ def public_profiles():
 
     return render_template('public_profiles.html', users=users)
 
+# ✅ View profile route for swap request
+@main.route('/profile/<int:user_id>')
+@login_required
+def view_profile(user_id):
+    user = User.query.get_or_404(user_id)
+    return render_template('profile.html', user=user)
