@@ -5,6 +5,11 @@ import { componentTagger } from "lovable-tagger";
 
 export default defineConfig(({ mode }) => ({
   base: mode === 'production' ? '/Skill-Swap-Platform-Odoo-Hackathon-2025-Round-01/' : '/',
+  build: {
+    outDir: 'dist',
+    assetsDir: 'assets',
+    sourcemap: false,
+  },
   server: {
     host: "::",
     port: 8080,
